@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scollet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/09 01:41:43 by scollet           #+#    #+#             */
-/*   Updated: 2017/08/20 22:01:56 by scollet          ###   ########.fr       */
+/*   Created: 2017/02/27 15:03:04 by scollet           #+#    #+#             */
+/*   Updated: 2017/03/06 17:37:16 by scollet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./fdf.h"
+#include "libft.h"
 
-int		error(const char *str)
+void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
-	ft_putendl(str);
-	exit(1);
+	size_t	i;
+
+	i = -1;
+	if (s && f)
+		while (*s)
+			f(++i, s++);
 }

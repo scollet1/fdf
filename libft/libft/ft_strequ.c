@@ -1,19 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_strequ.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scollet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/09 01:41:43 by scollet           #+#    #+#             */
-/*   Updated: 2017/08/20 22:01:56 by scollet          ###   ########.fr       */
+/*   Created: 2017/02/27 15:08:01 by scollet           #+#    #+#             */
+/*   Updated: 2017/03/06 17:23:47 by scollet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./fdf.h"
+#include "libft.h"
 
-int		error(const char *str)
+int		ft_strequ(const char *s1, const char *s2)
 {
-	ft_putendl(str);
-	exit(1);
+	int		i;
+
+	i = 0;
+	if (!(s1 && s2))
+		return (0);
+	while (s1[i] == s2[i])
+	{
+		if (s1[i] == 0 && s2[i] == 0)
+			return (1);
+		i++;
+	}
+	return (0);
 }

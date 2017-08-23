@@ -1,19 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scollet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/09 01:41:43 by scollet           #+#    #+#             */
-/*   Updated: 2017/08/20 22:01:56 by scollet          ###   ########.fr       */
+/*   Created: 2017/02/27 19:55:02 by scollet           #+#    #+#             */
+/*   Updated: 2017/03/06 17:37:58 by scollet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./fdf.h"
+#include "libft.h"
 
-int		error(const char *str)
+char	*ft_strmapi(const char *s, char (*f)(unsigned int, char))
 {
-	ft_putendl(str);
-	exit(1);
+	size_t	i;
+	char	*ret;
+
+	i = 0;
+	if (!(s && f))
+		return (0);
+	if (!(ret = (char*)malloc(sizeof(char) * (ft_strlen(s) + 1))))
+		return (0);
+	while (s[i])
+	{
+		ret[i] = f(i, s[i]);
+		i++;
+	}
+	ret[i] = 0;
+	return ((char*)ret);
 }

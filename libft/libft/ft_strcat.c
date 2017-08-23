@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scollet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/09 01:41:43 by scollet           #+#    #+#             */
-/*   Updated: 2017/08/20 22:01:56 by scollet          ###   ########.fr       */
+/*   Created: 2017/02/27 11:22:00 by scollet           #+#    #+#             */
+/*   Updated: 2017/08/20 23:04:38 by scollet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./fdf.h"
+#include "libft.h"
 
-int		error(const char *str)
+char	*ft_strcat(char *s1, const char *s2)
 {
-	ft_putendl(str);
-	exit(1);
+	ft_strcpy(&s1[ft_strlen(s1)], s2);
+	return (s1);
 }

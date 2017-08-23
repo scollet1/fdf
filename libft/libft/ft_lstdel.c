@@ -1,19 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_lstdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scollet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/09 01:41:43 by scollet           #+#    #+#             */
-/*   Updated: 2017/08/20 22:01:56 by scollet          ###   ########.fr       */
+/*   Created: 2017/03/06 21:47:07 by scollet           #+#    #+#             */
+/*   Updated: 2017/03/06 21:47:27 by scollet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./fdf.h"
+#include "libft.h"
 
-int		error(const char *str)
+void	ft_lstdel(t_list **alst, void (*del)(void*, size_t))
 {
-	ft_putendl(str);
-	exit(1);
+	t_list	*tmp;
+	t_list	*lst;
+
+	if (alst == 0)
+		return ;
+	lst = *alst;
+	while (lst)
+	{
+		tmp = lst->next;
+		ft_lstdelone(&lst, del);
+		lst = tmp;
+	}
+	*alst = 0;
 }

@@ -1,19 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scollet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/09 01:41:43 by scollet           #+#    #+#             */
-/*   Updated: 2017/08/20 22:01:56 by scollet          ###   ########.fr       */
+/*   Created: 2017/03/06 22:59:13 by scollet           #+#    #+#             */
+/*   Updated: 2017/03/07 08:10:34 by scollet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./fdf.h"
+#include "libft.h"
 
-int		error(const char *str)
+t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 {
-	ft_putendl(str);
-	exit(1);
+	t_list	*ret;
+	t_list	*tmp;
+
+	tmp = f(lst);
+	ret = tmp;
+	if (!(ret) || !(lst))
+		return (0);
+	while (lst->next)
+	{
+		lst = lst->next;
+		tmp->next = f(lst);
+		if (!(tmp->next))
+			return (0);
+		tmp = tmp->next;
+	}
+	return (ret);
 }

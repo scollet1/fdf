@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_memalloc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scollet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/09 01:41:43 by scollet           #+#    #+#             */
-/*   Updated: 2017/08/20 22:01:56 by scollet          ###   ########.fr       */
+/*   Created: 2017/02/27 14:24:10 by scollet           #+#    #+#             */
+/*   Updated: 2017/03/06 19:17:47 by scollet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./fdf.h"
+#include "libft.h"
 
-int		error(const char *str)
+void	*ft_memalloc(size_t size)
 {
-	ft_putendl(str);
-	exit(1);
+	char	*ret;
+
+	if (!(ret = (void*)malloc(sizeof(char) * (size + 1))) || size >= 2147483647)
+		return (0);
+	ft_bzero(ret, size);
+	return (ret);
 }

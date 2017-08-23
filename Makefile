@@ -16,13 +16,14 @@ FT = ./libft/libft.h
 MLX = ./minilibx_macos/mlx.h
 
 SRC = draw.c \
+			error.c \
+			grid.c \
+			key.c \
 			main.c \
-			fdf.c \
-			tools.c \
-			read.c
+			tools.c
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -g -Wall -Werror -Wextra
 
 HEAD = fdf.h
 
@@ -32,13 +33,13 @@ OBJ = $(patsubst %.c,%.o,$(addprefix $(PATH_SRC), $(SRC)))
 #CFLAGS += -Wall -Wextra -I libft -I minilibx_macos
 
 all: $(NAME)
+	@echo "\033[04;32mfdf Compilation completed!\033[0m"
 
 $(NAME): $(OBJ)
 	@make -C libft
 	@make -C minilibx_macos
-	$(CC) $(CFLAGS) -I $(FT) -I $(MLX) -c $(SRC)
-	$(CC) -o $(NAME) $(OBJ) -L libft -lft -L minilibx_macos -lmlx -framework OpenGL -framework AppKit
-	#@echo "\033[04;32mfdf Compilation completed!\033[0m"
+	@$(CC) $(CFLAGS) -I $(FT) -I $(MLX) -c $(SRC)
+	@$(CC) -o $(NAME) $(OBJ) -L libft/ -lft -L minilibx_macos/ -lmlx -framework OpenGL -framework AppKit
 
 .PHONY: clean fclean re
 		#@make -C minilibx_macos
@@ -54,8 +55,8 @@ clean:
 	@echo "Cleaning .o completed !"
 
 fclean: clean
-	@make -C libft fclean
-	@minilibx_macos fclean
+	@make -C libft clean
+	@make -C minilibx_macos clean
 	@echo "Fclean processing ..."
 	@rm -f $(NAME)
 	@echo "Fclean completed !"

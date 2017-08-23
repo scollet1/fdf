@@ -1,19 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_strmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scollet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/09 01:41:43 by scollet           #+#    #+#             */
-/*   Updated: 2017/08/20 22:01:56 by scollet          ###   ########.fr       */
+/*   Created: 2017/02/27 15:05:40 by scollet           #+#    #+#             */
+/*   Updated: 2017/03/06 18:10:29 by scollet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./fdf.h"
+#include "libft.h"
 
-int		error(const char *str)
+char	*ft_strmap(const char *s, char (*f)(char))
 {
-	ft_putendl(str);
-	exit(1);
+	size_t	i;
+	char	*ret;
+
+	i = 0;
+	if (!(s && f))
+		return (0);
+	if (!(ret = (char*)malloc(sizeof(char) * (ft_strlen(s) + 1))))
+		return (0);
+	while (s[i])
+	{
+		ret[i] = f(s[i]);
+		i++;
+	}
+	ret[i] = 0;
+	return ((char*)ret);
 }

@@ -1,19 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   memset.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scollet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/09 01:41:43 by scollet           #+#    #+#             */
-/*   Updated: 2017/08/20 22:01:56 by scollet          ###   ########.fr       */
+/*   Created: 2017/02/27 08:39:48 by scollet           #+#    #+#             */
+/*   Updated: 2017/03/06 17:58:27 by scollet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./fdf.h"
+#include "libft.h"
 
-int		error(const char *str)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	ft_putendl(str);
-	exit(1);
+	size_t			i;
+	unsigned char	a;
+	char			*pb;
+
+	a = (unsigned char)c;
+	i = 0;
+	pb = (char*)b;
+	while (i < len)
+		pb[i++] = a;
+	b = (void*)pb;
+	return (b);
 }

@@ -1,19 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scollet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/09 01:41:43 by scollet           #+#    #+#             */
-/*   Updated: 2017/08/20 22:01:56 by scollet          ###   ########.fr       */
+/*   Created: 2017/02/27 10:38:14 by scollet           #+#    #+#             */
+/*   Updated: 2017/03/06 17:26:18 by scollet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./fdf.h"
+#include "libft.h"
 
-int		error(const char *str)
+char	*ft_strdup(const char *s1)
 {
-	ft_putendl(str);
-	exit(1);
+	char	*tmp;
+	size_t	i;
+
+	i = 0;
+	if (!(tmp = (char*)malloc(sizeof(char) * (ft_strlen(s1) + 1))))
+		return (0);
+	while (s1[i] != 0)
+	{
+		tmp[i] = s1[i];
+		i++;
+	}
+	tmp[i] = 0;
+	return (tmp);
 }

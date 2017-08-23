@@ -5,93 +5,91 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: scollet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/26 16:41:47 by scollet           #+#    #+#             */
-/*   Updated: 2017/07/01 11:14:42 by scollet          ###   ########.fr       */
+/*   Created: 2017/08/20 06:04:09 by scollet           #+#    #+#             */
+/*   Updated: 2017/08/20 22:00:54 by scollet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./fdf.h"
-//#include "../includes/mlx.h"
+#include "fdf.h"
 
-int   animate(t_draw *object)
+void	draw_a(int *grid, double *coor, void *mlx, void *win)
 {
-  object->img = mlx_new_image(object->mlx, WIND_X + 100, WIND_Y + 100);
-  object->pxlimg = mlx_get_data_addr(object->img, &object->o,
-                                    &object->grid->len, &object->d);
-  draw(object);
-  mlx_put_image_to_window(object->mlx, object->window, object->img, -50, -50);
-  mlx_destroy_image(object->mlx, object->img);
-  return (0);
+	grid[6] = grid[0] / 2;
+	while (grid[7] <= grid[0])
+	{
+		grid[4] += grid[2];
+		grid[6] += grid[1];
+		if (grid[6] >= grid[0])
+		{
+			grid[6] -= grid[0];
+			grid[5] += grid[3];
+		}
+		mlx_pixel_put(mlx, win, grid[4], grid[5],\
+		color_gradient(coor[2]));
+		grid[7]++;
+	}
 }
 
-/*
-void  draw_point()
+void	draw_b(int *grid, double *coor, void *mlx, void *win)
 {
-
+	grid[6] = grid[1] / 2;
+	while (grid[7] <= grid[1])
+	{
+		grid[5] += grid[3];
+		grid[6] += grid[0];
+		if (grid[6] >= grid[1])
+		{
+			grid[6] -= grid[1];
+			grid[4] += grid[2];
+		}
+		mlx_pixel_put(mlx, win, grid[4], grid[5],\
+		color_gradient(coor[2]));
+		grid[7]++;
+	}
 }
 
-void  draw_wire(t_vector origin, t_vector dest, t_draw *object)
+void	print_line_b(double *coor, void *mlx, void *win, int act)
 {
-  if (outside(origin) && outside(dest))
-    return ;
-  pull_line(origin, dest, object->store);
-  //origin.c = mlx_get_color_value(object->mlx, origin.c);
-  //mlx_pixel_put(object->mlx, object->window, origin.x, y, origin.c);
-  while (origin.x != dest.x && origin.y != dest.y)
-  {
-    //y = mx + b
-    if (!outside(origin))
-    {
-      draw_point(origin, object, );
-    }
-    object->store[5] = object->store[4];
-    if (object->store[5])
+	int *grid;
 
-  }
-  return ;
+	if (act && (coor[3] = coor[6]))
+		coor[4] = coor[7];
+	grid = (int *)ft_memalloc(sizeof(int) * 8);
+	grid[7] = 1;
+	grid[4] = coor[0];
+	grid[5] = coor[1];
+	grid[0] = coor[3] - coor[0];
+	grid[1] = coor[4] - coor[1];
+	grid[2] = (grid[0] > 0) ? 1 : -1;
+	grid[3] = (grid[1] > 0) ? 1 : -1;
+	grid[0] = abs(grid[0]);
+	grid[1] = abs(grid[1]);
+	mlx_pixel_put(mlx, win, grid[4], grid[5], color_gradient(coor[2]));
+	if (grid[0] > grid[1])
+		draw_a(grid, coor, mlx, win);
+	else
+		draw_b(grid, coor, mlx, win);
 }
 
-*/
-
-t_draw   *draw(t_draw *object)
+void	draw(t_object *object, void *mlx, void *win)
 {
-  int      x;
-  int      y;
-  t_vector origin;
+	double		*coor;
+	t_object	*tmp_object;
+	int			dx;
+	int			dy;
 
-  y = 0;
-  while (y < object->grid->len)
-  {
-    x = 0;
-    while (x < object->grid->wire[y]->len)
-    {
-      origin = *object->grid->wire[y]->vectors[x];
-      if (object->grid->wire[y]->vectors[x + 1])
-        mlx_pixel_put(object->mlx, object->window,
-                    ((int)object->grid->wire[y]->vectors[x]->x),
-                    ((int)object->grid->wire[y]->vectors[x + 1]->y), 1);
-        //draw_wire(origin, (*object->grid->wire[y]->vectors[x + 1]), object);
-      //if (object->grid->wire[y + 1])
-        //if (object->grid->wire[y + 1]->vectors[x] &&
-            //x <= object->grid->wire[y + 1]->len)
-              //mlx_pixel_put();
-              //draw_wire(origin, (*object->grid->wire[y + 1]->vectors[x], object);
-    }
-  }
-  //mlx_pixel_put(object.mlx, object.window, object.grid->wire->x,
-  //  object.grid->wire->y, object.grid->wire.c);
-  return (object);
+	tmp_object = object;
+	dx = object->x;
+	dy = object->y;
+	while (tmp_object)
+	{
+		coor = set_grid_coor(tmp_object, dx, dy, object->zoom);
+		if (tmp_object->next && tmp_object->vect_m->x <
+				tmp_object->next->vect_m->x)
+			print_line_b(coor, mlx, win, 0);
+		if (tmp_object->down)
+			print_line_b(coor, mlx, win, 1);
+		tmp_object = tmp_object->next;
+		free(coor);
+	}
 }
-
-/*
-
-t_draw   create_window(t_draw object)
-{
-  if ((object.window = mlx_new_window(object.mlx,
-    WIND_X, WIND_Y, WIND_TITLE)) == NULL)
-    error(ERR_STD);
-  draw_object(object);
-  return (object);
-}
-
-*/

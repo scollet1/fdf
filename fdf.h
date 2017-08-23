@@ -6,69 +6,79 @@
 /*   By: scollet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 01:40:47 by scollet           #+#    #+#             */
-/*   Updated: 2017/06/27 08:00:22 by scollet          ###   ########.fr       */
+/*   Updated: 2017/08/20 22:14:11 by scollet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
-# define ERR_WRIN 	-1
-# define ERR_STD    0
-# define ERR_NOFILE 1
-# define ERR_BADRET 2
 
-# define WIND_TITLE "JUMBROTRON"
-# define WIND_X     400 /* Windex */
-# define WIND_Y     600 /* Windy */
-# define FT         42  /* Ayy loma */
+# include "./minilibx_macos/mlx.h"
+# include <unistd.h>
+# include <stdlib.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
+# include "./libft/libft.h"
 
-#include <unistd.h>
-#include <fcntl.h>
-#include "minilibx_macos/mlx.h"
-#include "./libft/libft.h"
+# define TITLE			"JoJo's Bizarre Adventure, now on the big screen"
+# define HEIGHT 		720
+# define WIDTH 			1080
+# define CONTEXT1		10
+# define CONTEXT2 		10
+# define RELIEF 		-1
 
-typedef struct s_vector
+# define UP_ARROW 		126
+# define DOWN_ARROW 	125
+# define LEFT_ARROW 	123
+# define RIGHT_ARROW	124
+# define W 				13
+# define S 				1
+# define A 				0
+# define D 				2
+# define ESC 			53
+
+typedef struct			s_vector
 {
-  double x;
-  double y;
-  double z;
-  int    c;
-}              t_vector;
+	float	x;
+	float	y;
+	float	z;
+}						t_vector;
 
-typedef struct s_wire {
-  t_vector **vectors;
-  int      len;
-}              t_wire;
-
-typedef struct s_grid {
-  t_wire **wire;
-  int    len;
-}              t_grid;
-
-typedef struct s_draw
+typedef struct			s_object
 {
-  t_grid    *grid;
-  void      *mlx;
-  void      *window;
-  void      *img;
-  void      *pxlimg;
-  double    store[6];
-  int       o;
-  int       d;
-  short     err;
-}              t_draw;
+	int				id;
+	t_vector		*vect_l;
+	t_vector		*vect_m;
+	int				x;
+	int				y;
+	int				zoom;
+	int				relief;
+	void			*mlx;
+	void			*window;
+	struct s_object	*next;
+	struct s_object	*down;
+}						t_object;
 
-int     animate(t_draw *object);
-int     control_fdf(t_draw *object, char *arg);
-t_draw  *create_window(t_draw *object);
-t_draw  *draw(t_draw *object);
-//void    draw_point(t_vector origin, t_vector dest, )
-void    draw_wire(t_vector origin, t_vector dest, t_draw *object);
-t_draw  *extract_coords(char *arg, t_draw *object);
-int     error(short errcode);
-int     getz(char *arr);
-int     outside(t_vector vector);
-void    pull_line(t_vector origin, t_vector dest, double *store);
-t_draw  *set_mem(t_draw *object);
+int						add_backsn(char *file);
+t_object				*add_elem(float x, float y, float z, t_object *object);
+t_object				*add_vector(t_object *object, int relief);
+t_vector				*calculate(t_vector *vector, int relief);
+int						color_gradient(double z);
+void					draw(t_object *object, void *mlx, void *win);
+int						error(const char *str);
+t_object				*find_down(float x, float y, t_object *object);
+t_object				*link_down(t_object *object);
+void					print_line_a(double *coor, void *mlx, void *win);
+void					print_line_b(double *coor, void *mlx,
+						void *win, int act);
+void					keypress_direction(t_object *object, int direction);
+void					keypress_zoom(t_object *object, int zoom);
+void					keypress_relief(t_object *object, int relief);
+t_object				*reverse_list(t_object *object);
+double					*set_grid_coor(t_object *object,
+						int decb, int decd, int zoom);
+t_object				*swap_list(t_object *object1, t_object *object2);
+int						key_hook(int keypress, t_object *b);
 
 #endif

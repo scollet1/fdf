@@ -1,19 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scollet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/09 01:41:43 by scollet           #+#    #+#             */
-/*   Updated: 2017/08/20 22:01:56 by scollet          ###   ########.fr       */
+/*   Created: 2017/02/27 12:19:06 by scollet           #+#    #+#             */
+/*   Updated: 2017/08/20 23:03:56 by scollet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./fdf.h"
+#include "libft.h"
 
-int		error(const char *str)
+char	*ft_strchr(const char *s, int c)
 {
-	ft_putendl(str);
-	exit(1);
+	char	*p;
+	size_t	i;
+
+	i = 0;
+	while (*s != c)
+	{
+		if (!*s)
+			return (0);
+		s++;
+	}
+	p = (char*)s;
+	return (p);
 }

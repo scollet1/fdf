@@ -1,19 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_strnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scollet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/09 01:41:43 by scollet           #+#    #+#             */
-/*   Updated: 2017/08/20 22:01:56 by scollet          ###   ########.fr       */
+/*   Created: 2017/02/27 14:41:59 by scollet           #+#    #+#             */
+/*   Updated: 2017/03/06 19:17:04 by scollet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./fdf.h"
+#include "libft.h"
 
-int		error(const char *str)
+char	*ft_strnew(size_t size)
 {
-	ft_putendl(str);
-	exit(1);
+	char		*tmp;
+	size_t		i;
+
+	i = 0;
+	if (!(tmp = (char*)malloc(sizeof(char) * (size + 1))))
+		return (0);
+	while (i < size)
+	{
+		tmp[i] = 0;
+		i++;
+	}
+	tmp[i] = 0;
+	return (tmp);
 }

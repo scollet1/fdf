@@ -1,19 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_strsub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scollet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/09 01:41:43 by scollet           #+#    #+#             */
-/*   Updated: 2017/08/20 22:01:56 by scollet          ###   ########.fr       */
+/*   Created: 2017/02/27 15:15:56 by scollet           #+#    #+#             */
+/*   Updated: 2017/03/07 20:27:26 by scollet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./fdf.h"
+#include "libft.h"
 
-int		error(const char *str)
+char	*ft_strsub(const char *s, unsigned int start, size_t len)
 {
-	ft_putendl(str);
-	exit(1);
+	char	*sub;
+	size_t	i;
+
+	i = 0;
+	if (!(s))
+		return (0);
+	if (!(sub = (char*)malloc(sizeof(char) * (len + 1))))
+		return (0);
+	while (i < len)
+	{
+		sub[i] = s[start];
+		start++;
+		i++;
+	}
+	sub[i] = 0;
+	return (sub);
 }
